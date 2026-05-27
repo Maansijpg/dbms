@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QueryMind</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <h1>QueryMind</h1>
+    <a href="index.html" class="active">Dashboard</a>
+    <a href="chat.html">🤖 AI Assistant</a>
+  </nav>
+
+  <main>
+    <div id="cards-row">
+      <div class="card" id="card-best">
+        <strong>Best Stock</strong>
+        <div class="value" id="best-val">Loading...</div>
+      </div>
+      <div class="card">
+        <strong>Total Stocks</strong>
+        <div class="value" id="total-stocks">-</div>
+      </div>
+      <div class="card">
+        <strong>Portfolio</strong>
+        <div class="value">My Portfolio</div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Portfolio Performance</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Buy Price</th>
+            <th>Today's Price</th>
+            <th>Total Gain</th>
+            <th>Gain %</th>
+          </tr>
+        </thead>
+        <tbody id="gains-body"></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Buy Stock</h2>
+      <form id="buy-form">
+        <select id="stock-select"></select>
+        <input type="number" id="shares-input" placeholder="Shares" min="1">
+        <input type="number" id="price-input" placeholder="Buy price">
+        <button type="submit">Buy</button>
+      </form>
+      <p id="buy-msg"></p>
+    </section>
+
+    <section>
+      <h2>AI Buy/Sell Signals</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Signal</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody id="signals-body"></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Anomaly Detection</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Date</th>
+            <th>Error Score</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="anomaly-body"></tbody>
+      </table>
+    </section>
+
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QueryMind – AI Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <h1>📈 QueryMind</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="chat.html" class="active">🤖 AI Assistant</a>
+  </nav>
+
+  <div id="chat-container">
+    <div id="chat-messages">
+      <div class="msg bot">Hi! I'm QueryMind 🤖 Ask me anything about your portfolio — I'll query the database and explain it in plain English.</div>
+    </div>
+    <div id="chat-input-row">
+      <input id="chat-input" placeholder="e.g. Which stock made the most profit?" />
+      <button id="send-btn">Send</button>
+    </div>
+    <div id="suggestions">
+      <span onclick="ask(this)">Which stock is performing best?</span>
+      <span onclick="ask(this)">Show my total portfolio summary</span>
+      <span onclick="ask(this)">Which sector am I most invested in?</span>
+      <span onclick="ask(this)">Show recent price changes</span>
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+
+    function addMsg(text, role) {
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      div.textContent = text;
+      document.getElementById('chat-messages').appendChild(div);
+      div.scrollIntoView({ behavior: 'smooth' });
+      return div;
+    }
+
+    async function sendMessage(msg) {
+      if (!msg.trim()) return;
+      addMsg(msg, 'user');
+      const thinking = addMsg('Thinking...', 'bot thinking');
+      try {
+        const res = await fetch(`${API}/agent/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg })
+        });
+        const data = await res.json();
+        thinking.remove();
+        addMsg(data.reply || data.error, 'bot');
+      } catch (err) {
+        thinking.remove();
+        addMsg('Error connecting to server.', 'bot');
+      }
+    }
+
+    document.getElementById('send-btn').onclick = () => {
+      const input = document.getElementById('chat-input');
+      sendMessage(input.value);
+      input.value = '';
+    };
+
+    document.getElementById('chat-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('send-btn').click();
+    });
+
+    function ask(el) { sendMessage(el.textContent); }
+  </script>
+</body>
+</html>
