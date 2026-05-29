@@ -1,14 +1,7 @@
 const db = require('../db');
 const { createChatCompletion } = require('./luminaClient');
 
-<<<<<<< HEAD
-const groq = new OpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY,
-});
-=======
 const MOOD_KEYWORDS = ['market mood', 'market sentiment', 'how is the market', 'market feeling', 'mood'];
->>>>>>> 243afa2 (fixed bugs)
 
 async function runAgent(userMessage) {
   const msg = userMessage.toLowerCase();

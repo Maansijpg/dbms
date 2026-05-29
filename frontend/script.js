@@ -1,4 +1,4 @@
-const API = 'http://localhost:3000/api';
+const API = 'http://localhost:3005/api';
 const shownAnomalyToasts = new Set();
 
 async function apiFetch(path) {

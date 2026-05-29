@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-app.use(cors({ origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://localhost:3001', 'http://127.0.0.1:3001'] }));
+app.use(cors({ origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://localhost:3001', 'http://127.0.0.1:3001', 'http://localhost:3005', 'http://127.0.0.1:3005'] }));
 app.use(express.json({ limit: '1mb' }));
 
 app.use('/api/portfolio', require('./routes/portfolio'));
@@ -19,4 +19,4 @@ app.use(express.static('frontend'));
 app.get('/', (req, res) => {
   res.send('SentinelPortfolio API is running');
 });
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.listen(3005, () => console.log('Server running on http://localhost:3005'));
