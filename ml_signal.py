@@ -6,7 +6,8 @@ from sklearn.metrics import classification_report
 from sklearn.utils.class_weight import compute_sample_weight
 import pickle
 
-MODEL_PATH = "/Users/maansibr/Desktop/Business & Finance/stock mysql/model.pkl"
+import os
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.pkl")
 FEATURE_COLS = ['return_1d', 'return_5d', 'return_20d', 'ma_5', 'ma_20', 'ma_ratio', 'rsi', 'macd']
 
 def load_data():
@@ -94,9 +95,9 @@ def train():
     
     sample_weights = compute_sample_weight(class_weight='balanced', y=y_train)
     model = xgb.XGBClassifier(
-        n_estimators=200,   #200 trees, more than before for better accuracy
-        max_depth=4,        #each tree asks 4 yes/no questions
-        learning_rate=0.05, #slower learning = more careful = generally more accurate
+        n_estimators=200,   
+        max_depth=4,       
+        learning_rate=0.05, 
         eval_metric='mlogloss'
     )
     
@@ -123,7 +124,7 @@ def get_signals():
     proba       = model.predict_proba(X)
     predictions = proba.argmax(axis=1)
     confidence  = proba[range(len(predictions)), predictions]
-    #probabilities for all 3 classes per stock
+
 
     results = latest_rows[['ticker', 'date', 'close']].copy()
     results['Signal']     = predictions
